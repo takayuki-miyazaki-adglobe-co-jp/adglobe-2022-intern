@@ -15,6 +15,7 @@
 		// "onecentlin.laravel-blade"
 	],
 	"remoteUser": "sail",
+	"initializeCommand": "docker-compose run --rm composer",
 	"postCreateCommand": "chown -R 1000:1000 /var/www/html"
 	// "forwardPorts": [],
 	// "runServices": [],
