@@ -16,7 +16,9 @@ import { createApp } from 'vue';
 const app = createApp({});
 
 import ExampleComponent from './components/ExampleComponent.vue';
+import LaravelTop from './components/LaravelTop.vue';
 app.component('example-component', ExampleComponent);
+app.component('laravel-top', LaravelTop);
 
 /**
  * The following block of code may be used to automatically register your
