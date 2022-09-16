@@ -15,7 +15,11 @@
 		"onecentlin.laravel-blade",
 		"neilbrayfield.php-docblocker",
 		"austenc.laravel-blade-spacer",
-		"codingyu.laravel-goto-view"
+		"codingyu.laravel-goto-view",
+		"octref.vetur",
+		"dariofuzinato.vue-peek",
+		"formulahendry.auto-rename-tag",
+		"xabikos.JavaScriptSnippets"
 	],
 	"remoteUser": "sail",
 	"initializeCommand": "docker-compose run --rm composer",
