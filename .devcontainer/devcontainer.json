@@ -21,7 +21,7 @@
 		"formulahendry.auto-rename-tag",
 		"xabikos.JavaScriptSnippets"
 	],
-	"remoteUser": "sail",
+	// "remoteUser": "sail",
 	"initializeCommand": "docker-compose run --rm composer",
 	"postCreateCommand": "chown -R 1000:1000 /var/www/html"
 	// "forwardPorts": [],
