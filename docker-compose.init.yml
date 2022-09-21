@@ -1,0 +1,11 @@
+# For more information: https://laravel.com/docs/sail
+version: '3'
+services:
+    composer:
+        image: laravelsail/php81-composer:latest
+        working_dir: /var/www/html
+        volumes:
+            - '.:/var/www/html'
+        command: "composer install --ignore-platform-reqs"
+        profiles:
+            - extra
