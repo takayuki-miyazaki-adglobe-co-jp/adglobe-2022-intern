@@ -44,14 +44,6 @@ services:
             test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
             retries: 3
             timeout: 5s
-    composer:
-        image: laravelsail/php81-composer:latest
-        working_dir: /var/www/html
-        volumes:
-            - '.:/var/www/html'
-        command: "bash -c \"if [  ! -d 'vendor' ]; then composer install --ignore-platform-reqs; fi\""
-        profiles:
-            - extra
 networks:
     sail:
         driver: bridge
