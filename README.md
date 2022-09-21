@@ -1,64 +1,145 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 起動手順
+## 前提
+環境を構築するため、下記のアプリケーションをインストールしてください。  
+インストール方法はリンク先をご参照ください。
+- Visual Studio Code
+  - 拡張機能 Remote - Containers
+- Docker Desktop
+- WSL2 (Windows ユーザのみ)
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 初回起動時
 
-## About Laravel
+1. 任意のディレクトリにこのリポジトリを `git clone` します。
+```bash
+git clone https://xxxx
+```
+2. `git clone` してきたフォルダに Slack で配布された `.env` ファイルを配置します。
+3. `git clone` してきたフォルダを VSCode で開きます。
+4. VSCodeのターミナル上で下記のコマンドを実行します。  
+※実行完了まで数分かかります。  
+```bash
+docker-compose -f docker-compose.init.yml run --rm composer
+```
+5. 上記のコマンドが完了したら、 VSCode のウィンドウ左下の「><」を押下して  
+![1-1](https://user-images.githubusercontent.com/105618751/191493624-a6ff6248-491e-4f3f-97a3-372594f66a09.png)  
+`Reopen in Container` を選択します。  
+![1-2](https://user-images.githubusercontent.com/105618751/191493629-b51da169-af21-400b-9218-c689347fb74d.png)  
+コンテナで開くことができた場合、 VSCode の表示が下記のように変更されます。  
+![1-3](https://user-images.githubusercontent.com/105618751/191495808-daf37c0f-2948-433b-8877-85691df4b7aa.png)  
+※コンテナで開くのに初回は数分かかります。  
+　途中で動かなくなった場合、 VSCode を起動しなおしてもう一度「Reopen in Container」を選択してみてください。  
+6. VSCode のターミナル(bash)で以下のコマンドを実行します。  
+```bash
+php artisan migrate
+```
+7. VSCode のターミナル(bash)で以下のコマンドを実行します。
+```bash
+npm install && npm run dev
+```
+8. [localhost](http://localhost) に接続し、下記の画面が表示されれば環境構築は完了です。  
+![image](https://user-images.githubusercontent.com/105618751/191496833-fa40fdd6-34bf-4f6b-b5f2-b43f4651c93b.png)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 初回起動完了後の起動手順
+1. `git clone` してきたフォルダを VSCode で開きます。
+2. VSCode のウィンドウ左下の「><」を押下して `Reopen in Container` を選択します。  
+3. VSCode のターミナル(bash)で以下のコマンドを実行します。  
+```bash
+npm run dev
+```
+※開発状況に応じて下記のコマンドも実行が必要になる可能性があります。  
+　チームメンバーと相談・確認を行い、必要に応じて実行してください。
+```bash
+# データベース変更時
+php artisan migrate
+# Laravel パッケージ変更時
+composer install
+# npm パッケージ変更時
+npm install
+```
+4. [localhost](http://localhost) に接続します。  
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+# 開発手順
+## ディレクトリ構成
+<pre>
+/var/www/html
+  ├ .devcontainer
+  │  └ devcontainer.json ← VSCode の環境設定
+  ├ app
+  │  ├ Console
+  │  ├ Exceptions
+  │  ├ Http
+  │  │  ├ <mark>Controllers</mark> ← URL アクセス時の挙動を定義
+  │  │  ├ Middleware
+  │  │  └ Kernel.php
+  │  ├ <mark>Models</mark> ← データベースのテーブル構造を Laravel で使用するための定義
+  │  └ Providers
+  ├ bootstrap
+  ├ config
+  ├ database
+  │  ├ factories
+  │  ├ <mark>migrations</mark> ← データベースの構成を定義
+  │  └ <mark>seeders</mark> ← データベースに初期登録しておくデータを定義
+  ├ lang
+  ├ <del>node_modules</del> ← npm パッケージマネージャが自動生成するディレクトリ（編集禁止）
+  ├ public
+  ├ resources
+  │  ├ css
+  │  │  └ app.css
+  │  ├ js
+  │  │  ├ <mark>components</mark> ← Vue.js で画面のコントロールを作成
+  │  │  ├ <mark>app.js</mark> ← components に作成したモジュールの読み込み
+  │  │  └ bootstrap.js
+  │  ├ sass
+  │  │  ├ app.scss
+  │  │  └ _variables.scss
+  │  └ <mark>views</mark> ← UI を HTML(Blade) で作成して配置
+  │    ├ auth
+  │    └ <mark>layouts</mark> ← 画面の共通レイアウト（ヘッダ・フッタ等）の定義
+  ├ routes
+  │  ├ api.php
+  │  ├ channels.php
+  │  ├ console.php
+  │  └ <mark>web.php</mark> ← ルーティングの定義
+  ├ storage
+  ├ tests
+  └ <del>vendor</del> ← composer パッケージマネージャが自動生成するディレクトリ（編集禁止）
+</pre>
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## データベース関係
+todo: マイグレーションとかについて書く
 
-## Learning Laravel
+## ルーティング関係
+todo: web.php と Controllers について書く
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## フロント関係
+### Vue コンポーネントの作成方法
+`resources/js/components` 配下に vue ファイルを作成します。  
+作成方法についてはサンプルで配置しているファイルや、[公式ドキュメント](https://v3.ja.vuejs.org/guide/introduction.html)等を参考にしてください。  
+基本的には `<template>` タグの中に HTML でレイアウトを、 `<script>` タグの中に JavaScript でイベントやデータ定義を、 `<style>` タグの中に CSS で HTML の装飾を行うと覚えておけばだいたい問題ないです。  
+ライフサイクルイベント（ボタン押下などではなく画面表示で自然と発生するイベント）については[こちら](https://v3.ja.vuejs.org/guide/instance.html#%E3%83%A9%E3%82%A4%E3%83%95%E3%82%B5%E3%82%A4%E3%82%AF%E3%83%AB%E3%82%BF%E3%82%99%E3%82%A4%E3%82%A2%E3%82%AF%E3%82%99%E3%83%A9%E3%83%A0)が参考になると思います。
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 作成したコンポーネントの登録
+`resources/js/app.js` に作成したコンポーネントを登録することで、
+Blade 内で使用することが可能になります。
+```diff
+import ExampleComponent from './components/ExampleComponent.vue';
+import LaravelTop from './components/LaravelTop.vue';
++ // 作成したコンポーネントを import する
++ import HogeComponent from './components/HogeComponent.vue';
+app.component('example-component', ExampleComponent);
+app.component('laravel-top', LaravelTop);
++ // Vue インスタンス (app) に登録する
++ app.component('hoge-component', HogeComponent);
+```
 
-## Laravel Sponsors
+### 作成したコンポーネントを Blade に配置する
+`resources/vies/welcome.blade.php` にはサンプルの Vue コンポーネント (LaravelTop.vue) を配置してあります。  
+コンポーネントへ PHP の値を受け渡しているため、そのあたりも参考にしてください。  
+ポイントとしては、
+- .vue ファイルに直接 PHP を埋め込むことはできない
+- Vue コンポーネントは `props` を定義することで親から値を受け取れる
+- Blade ファイルは `{{}}` 内に PHP の値を出力できる
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
-
-### Premium Partners
-
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+といったところです。  
+これらを組み合わせることでバックエンドから受け取った値を Vue 上に表示することができると思います。  
+Blade そのものの記載方法については[公式ドキュメント](https://readouble.com/laravel/9.x/ja/blade.html)をご参照ください。
