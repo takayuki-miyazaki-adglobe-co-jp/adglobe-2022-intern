@@ -6,6 +6,6 @@ services:
         working_dir: /var/www/html
         volumes:
             - '.:/var/www/html'
-        command: "bash -c \"if [  ! -d 'vendor' ]; then composer install --ignore-platform-reqs; fi\""
+        command: "composer install --ignore-platform-reqs"
         profiles:
             - extra

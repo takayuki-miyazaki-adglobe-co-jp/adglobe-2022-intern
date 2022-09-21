@@ -22,7 +22,7 @@
 		"xabikos.JavaScriptSnippets"
 	],
 	// "remoteUser": "sail",
-	"initializeCommand": "docker-compose -f docker-compose.init.yml run --rm composer",
+	// "initializeCommand": "docker-compose -f docker-compose.init.yml run --rm composer",
 	"postCreateCommand": "chown -R 1000:1000 /var/www/html"
 	// "forwardPorts": [],
 	// "runServices": [],
