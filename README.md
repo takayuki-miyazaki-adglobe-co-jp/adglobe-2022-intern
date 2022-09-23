@@ -68,17 +68,17 @@ npm install
   │  ├ Console
   │  ├ Exceptions
   │  ├ Http
-  │  │  ├ <mark>Controllers</mark> ← URL アクセス時の挙動を定義
+  │  │  ├ <strong>Controllers</strong> ← URL アクセス時の挙動を定義
   │  │  ├ Middleware
   │  │  └ Kernel.php
-  │  ├ <mark>Models</mark> ← データベースのテーブル構造を Laravel で使用するための定義
+  │  ├ <strong>Models</strong> ← データベースのテーブル構造を Laravel で使用するための定義
   │  └ Providers
   ├ bootstrap
   ├ config
   ├ database
   │  ├ factories
-  │  ├ <mark>migrations</mark> ← データベースの構成を定義
-  │  └ <mark>seeders</mark> ← データベースに初期登録しておくデータを定義
+  │  ├ <strong>migrations</strong> ← データベースの構成を定義
+  │  └ <strong>seeders</strong> ← データベースに初期登録しておくデータを定義
   ├ lang
   ├ <del>node_modules</del> ← npm パッケージマネージャが自動生成するディレクトリ（編集禁止）
   ├ public
@@ -86,20 +86,20 @@ npm install
   │  ├ css
   │  │  └ app.css
   │  ├ js
-  │  │  ├ <mark>components</mark> ← Vue.js で画面のコントロールを作成
-  │  │  ├ <mark>app.js</mark> ← components に作成したモジュールの読み込み
+  │  │  ├ <strong>components</strong> ← Vue.js で画面のコントロールを作成
+  │  │  ├ <strong>app.js</strong> ← components に作成したモジュールの読み込み
   │  │  └ bootstrap.js
-  │  ├ <mark>sass</mark> ← UI のスタイルを定義
+  │  ├ <strong>sass</strong> ← UI のスタイルを定義
   │  │  ├ app.scss
   │  │  └ _variables.scss
-  │  └ <mark>views</mark> ← UI を HTML(Blade) で作成して配置
+  │  └ <strong>views</strong> ← UI を HTML(Blade) で作成して配置
   │      ├ auth
   │      └ <mark>layouts</mark> ← 画面の共通レイアウト（ヘッダ・フッタ等）の定義
   ├ routes
   │  ├ api.php
   │  ├ channels.php
   │  ├ console.php
-  │  └ <mark>web.php</mark> ← ルーティングの定義
+  │  └ <strong>web.php</strong> ← ルーティングの定義
   ├ storage
   ├ tests
   └ <del>vendor</del> ← composer パッケージマネージャが自動生成するディレクトリ（編集禁止）
