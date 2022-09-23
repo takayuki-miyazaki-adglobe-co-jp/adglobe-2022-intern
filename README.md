@@ -2,16 +2,16 @@
 ## 前提
 環境を構築するため、下記のアプリケーションをインストールしてください。  
 インストール方法はリンク先をご参照ください。
-- Visual Studio Code
-  - 拡張機能 Remote - Containers
-- Docker Desktop
-- WSL2 (Windows ユーザのみ)
+- [Visual Studio Code](https://azure.microsoft.com/ja-jp/products/visual-studio-code/)
+  - 拡張機能 [Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- [WSL2](https://learn.microsoft.com/ja-jp/windows/wsl/install) (Windows ユーザのみ)
 
 ## 初回起動時
 
 1. 任意のディレクトリにこのリポジトリを `git clone` します。
 ```bash
-git clone https://xxxx
+git clone <このリポジトリの URL>
 ```
 2. `git clone` してきたフォルダに Slack で配布された `.env` ファイルを配置します。
 3. `git clone` してきたフォルダを VSCode で開きます。
