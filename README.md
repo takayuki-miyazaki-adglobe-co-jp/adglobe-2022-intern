@@ -335,7 +335,77 @@ $men = Gender::where('code', '1')->first()->users();
 リレーションの定義としては以上となります。
 
 ## ルーティング関係
-todo: web.php と Controllers について書く
+ルーティングとは URL アクセスが起こった際、どういった処理を行うのかを定義することです。  
+Laravel ではドメインからの相対パスと HTTP メソッドの組み合わせに対し何を行うのかを `routes/web.php` に記述します。  
+※バックエンドとフロントエンドが完全に分離している (Laravel を API サーバとして運用する) 場合は `routes/api.php` に記述するのがお作法のようです。
+両者の違いについては[こちら](https://qiita.com/pyon141/items/b3a2d2865c70b6a73ae2)が参考になります。
+
+### ルーティング
+例によって[Laravel 公式ドキュメント - ルーティング](https://readouble.com/laravel/9.x/ja/routing.html)の項が非常に詳細に記載されていますのでこちらをご参照いただくことを強く推奨します。  
+ここでは簡単に概要と注意事項を記載します。
+
+`web.php` には `Route::<任意の HTTP メソッド>(<ドメインからの相対パス>, <行う処理>);` という形でルーティングを定義できます。  
+例えば環境構築時点では次の定義があります。
+```php
+Route::get('/', function () {
+    return view('welcome');
+});
+```
+これは `/` (index) に GET リクエストがあった場合に `resources/views/welcome.blade.php` を表示する、という意味になります。  
+静的なページを表示する場合は特に問題ないのですが、サーバ日時を表示したいといった要望に対応した場合は次のように修正を加える必要があります。
+```php
+Route::get('/', function () {
+    // 現在時刻を取得
+    $currentTimestamp = date("Y-m-d H:i:s");
+    // compact は引数のキー名と同じ変数名の値をレスポンスに含めることができる関数
+    return view('welcome', compact('currentTimestamp'));
+});
+```
+では今度はサーバ日時に加えてアクセスポイントの情報と周辺の天気・気温・湿度も表示したいと要望が出たとします。  
+要望に応えているうちに `web.php` は際限なく肥大化していきます。
+```php
+Route::get('/', function () {
+    // 現在時刻を取得
+    $currentTimestamp = date("Y-m-d H:i:s");
+    // アクセスポイントを取得
+    $accessPoint = getAccessPoint();
+    // アクセスポイント周辺の天気を取得
+    $weather = getWeather($accessPoint);
+    // アクセスポイント周辺の気温を取得
+    $temperature = getTemperature($accessPoint);
+    // アクセスポイント周辺の湿度を取得
+    $humidity = getHumidity($accessPoint);
+    // 返さないといけない情報が増えてきた…
+    return view('welcome', compact('currentTimestamp', 'accessPoint', 'weather', 'temperature', 'humidity'));
+});
+```
+
+こういう場合はコントローラクラスを定義し処理を委譲するようにしましょう。  
+コントローラは `app/Http/Controllers` 配下に作成します。  
+今回の場合は `WelcomeController.php` を作成し、以下のように修正するとよいでしょう。
+```php
+// app/Http/Controllers/WelcomeController.php
+<?php
+
+namespace App\Http\Controllers;
+
+class WelcomeController extends Controller {
+    public function index() {
+        $currentTimestamp = date("Y-m-d H:i:s");
+        $accessPoint = getAccessPoint();
+        $weather = getWeather($accessPoint);
+        $temperature = getTemperature($accessPoint);
+        $humidity = getHumidity($accessPoint);
+        return view('welcome', compact('currentTimestamp', 'accessPoint', 'weather', 'temperature', 'humidity'));
+    }
+}
+
+// routes/web.php
+use App\Http\Controllers\WelcomeController;
+
+// / (index) に GET リクエストがあった場合に WelcomeController というクラスが持つ index メソッドが実行される、という定義
+Route::get('/', [WelcomeController::class, 'index']);
+```
 
 ## フロント関係
 Vue.js と Laravel の連携方法について説明します。
