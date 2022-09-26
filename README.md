@@ -64,6 +64,7 @@ npm install
 /var/www/html
   ├ .devcontainer
   │  └ devcontainer.json ← VSCode の環境設定
+  ├ .github
   ├ app
   │  ├ Console
   │  ├ Exceptions
@@ -440,7 +441,7 @@ app.component('laravel-top', LaravelTop);
 
 といったところです。  
 これらを組み合わせることでバックエンドから受け取った値を Vue 上に表示することができると思います。  
-Blade そのものの記述方法については[Laravel 公式ドキュメント - Blada テンプレート](https://readouble.com/laravel/9.x/ja/blade.html)の項をご参照ください。
+Blade そのものの記述方法については[Laravel 公式ドキュメント - Blade テンプレート](https://readouble.com/laravel/9.x/ja/blade.html)の項をご参照ください。
 
 ### 注意事項
 Vue コンポーネントを使用する場合 `resources/js/app.js` を Blade 側で読み込んであげる必要があります。  
